@@ -1,7 +1,5 @@
-import Post from './post.js';
-
 function Button(props) {
-  return `<button class="${props.class}" onclick="button.handleClick(event, ${props.onClick})"> ${props.title}</button>`;
+  return `<button class="${props.class}" onclick="button.handleClick(event, ${props.onClick})">${props.title}</button>`;
 }
 
 window.button = {

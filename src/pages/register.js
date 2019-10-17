@@ -31,32 +31,40 @@ function createUser() {
 }
 
 function Register() {
-  return `
-    <div id="error"></div>
+  window.location.hash = '#register';
+  
+  const template = `
+    <p id="error"></p>
     <section class ='initial-section'>
       <header class='initial-header'></header>
       <img class='img-section' src='img/logo.png'/>
       <div class="text">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
     
       <form>
-      ${Input({
-    id: 'email',
-    class: 'primary-input',
-    type: 'email',
-    placeholder: 'E-mail',
-  })}
-      ${Input({
-    id: 'password',
-    class: 'primary-input',
-    type: 'password',
-    placeholder: 'Senha',
-  })}
-      ${Button({
-    class: 'primary-button',
-    title: 'Registre-se',
-    onClick: createUser,
-  })}
-      </form>`;
+        ${Input({
+          id: 'email',
+          class: 'primary-input',
+          type: 'email',
+          placeholder: 'E-mail',
+        })}
+
+        ${Input({
+          id: 'password',
+          class: 'primary-input',
+          type: 'password',
+          placeholder: 'Senha',
+        })}
+
+        ${Button({
+          class: 'primary-button',
+          title: 'Registre-se',
+          onClick: createUser,
+        })}
+      </form>
+    </section>
+  `;
+
+  return template;
 }
 
 export default Register;

@@ -15,10 +15,9 @@ function userLogin() {
           document.getElementById('error').innerText = 'Usuário não cadastrado.';
         }
       });
-  })
-    .catch(() => {
-      alert('deu erro');
-    });
+  }).catch(() => {
+    document.getElementById('error').innerText = 'Erro ao identificar seu login';
+  });
 }
 
 function googleLogin() {
@@ -39,56 +38,65 @@ function googleLogin() {
         document.getElementById('error').innerText = `${error.message} - erro no login do google`;
       }
     });
-  })
-    .catch(() => {
-      alert('deu erro');
-    });
+  }).catch(() => {
+    document.getElementById('error').innerText = 'Erro ao identificar seu login';
+  });
 }
 
+function userRegister() {
+  window.location.href = '#register';
+}
 
 function Login() {
   window.location.href = '#login';
 
   const login = `
     <section class ='initial-section'>
-      <header >
-      
-      </header>
       <img class='img-section' src='img/logo.png'/>
       <div class="text">Bem vindo à maior rede social de educação do Brasil!</div>
       
       <form>
         ${Input({
-    id: 'email',
-    class: 'primary-input',
-    type: 'email',
-    placeholder: 'E-mail',
-  })}
-      ${Input({
-    id: 'password',
-    class: 'primary-input',
-    type: 'password',
-    placeholder: 'Senha',
-  })}
-      ${Button({
-    class: 'primary-button',
-    title: 'Entrar',
-    onClick: userLogin,
-  })}
-      ${Button({
-    class: 'google-login',
-    title: '<img src="../img/google.png">',
-    onClick: googleLogin,
-  })}
-        </form>
+          id: 'email',
+          class: 'primary-input',
+          type: 'email',
+          placeholder: 'E-mail',
+        })}
 
+        ${Input({
+          id: 'password',
+          class: 'primary-input',
+          type: 'password',
+          placeholder: 'Senha',
+        })}
         <p class='login-error' id="error"></p>
 
+        ${Button({
+          class: 'primary-button',
+          title: 'Entrar',
+          onClick: userLogin,
+        })}
+
+        ${Button({
+          class: 'primary-button google-icon',
+          title: 'Entrar com Google',
+          onClick: googleLogin,
+        })}
+
+        ${Button({
+          class: 'primary-button',
+          title: 'Registre-se',
+          onClick: userRegister,
+        })}
+      </form>
+      
+        
       ${Link({
-    class: 'register-link',
-    hash: '#register',
-    text: 'Registre-se',
-  })}
+        class: 'register-link',
+        hash: '#register',
+        text: 'Registre-se',
+      })}
+
     </section>
   `;
 
