@@ -18,16 +18,17 @@
 
 .initial-section{
   background-image: url(img/background.png);
-  background-size:cover;
+  background-size: cover;
   margin: auto;
   padding: 2em;
 }
 
 .img-section{
-  width: 50%;
-  display:flex;
-  flex-direction: column;
-  margin:10% auto;
+  width: 70%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: left;
+  margin: 3% auto;
 }
 
 .intro-text {
@@ -67,22 +68,19 @@
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
-.google-login img {
-  width: 1.8em;
-}
-
 .google-login {
+  background-image: url(./img/google.png);
+  background-repeat: no-repeat;
+  background-size: 1.93em;
+  background-position: center;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
-  width: 2.5em;
-  height: 2.5em;
-  align-items: center;
+  width: 3em;
+  height: 3em;
   border: none;
   background-color: #f2f2f2;
   border-radius: 1.5em;
-  display:flex;
-  flex-direction: column;
-  margin: 1% auto;
-  padding: 0.35em 0 0 0;
+  display: flex;
+  margin: .8em auto;
 }
 
 .primary-input {
@@ -94,17 +92,20 @@
   display:flex;
   flex-direction: column;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
-  margin:3% auto;
+  margin: 1em auto;
 }
 
-.register-link {
-  color: #f2f2f2;
+.primary-link {
+  color: #156258;
   display: flex;
   flex-direction: column;
-  align-content :left;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.15em;
+  text-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
-.register-link:hover {
+.primary-link:hover {
   color: #f46b34;
 }
 
@@ -148,7 +149,12 @@
   border-radius: .4em;
 }
 
+.hidden-button {
+  display: none;
+}
+
 @media (max-width: 1000px) {
+
   .post-textbox {
     width: 90%;
   } 

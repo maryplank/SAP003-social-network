@@ -77,15 +77,15 @@ function Login() {
   })}
       ${Button({
     class: 'google-login primary-login',
-    title: '<img src="../img/google.png">',
+    title: '',
     onClick: googleLogin,
   })}
         </form>
 
         <p class='login-error' id="error"></p>
-
+        <p class="intro-text secondary-font">Ainda não tem uma conta?</p>
       ${Link({
-    class: 'register-link',
+    class: 'primary-link primary-font',
     hash: '#register',
     text: 'Registre-se',
   })}
