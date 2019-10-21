@@ -22,22 +22,28 @@ function createNewPost() {
 }
 
 function Home() {
-  const template = `
-  <p class="text">Essa é a home!</p>
+  window.location.href = '#home';
 
-  <p id="error"></p>
+  const template = `
+  ${Button({
+    class: 'primary-button primary-font',
+    onClick: window.home.logOut,
+    title: 'Log out',
+  })}
   
+  <form>
   ${Textarea({
     id: 'postText',
-    class: 'primary-textarea',
+    class: 'post-textbox secondary-font',
     placeholder: 'O que você está pensando agora?',
   })}
   
   ${Button({
-    class: 'primary-button',
+    class: 'primary-button primary-font',
     onClick: window.home.createNewPost,
     title: 'Post!',
   })}
+  </form>
 
   ${Feed()}
   `;

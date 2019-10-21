@@ -1,12 +1,13 @@
 function Button(props) {
-  return `<button class="${props.class}" onclick="button.handleClick(event, ${props.onClick})">${props.title}</button>`;
+  return `<button data-id=${props.dataId} class="${props.class}" onclick="button.handleClick(event, ${props.onClick})"> ${props.title}</button>`;
 }
 
 window.button = {
   handleClick: (event, callback) => {
     event.preventDefault();
-    callback();
+    callback(event);
   },
+  component: Button,
 };
 
 export default Button;

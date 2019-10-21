@@ -17,12 +17,14 @@ function createUser() {
     });
   }).catch((error) => {
     const errorCode = error.code;
+    console.log(errorCode);
+
     const errorMessage = error.message;
     if (errorCode === 'auth/email-already-in-use') {
       document.getElementById('error').innerText = 'E-mail já cadastrado.';
-    } if (errorCode === 'auth/weak-password') {
+    } else if (errorCode === 'auth/weak-password') {
       document.getElementById('error').innerText = 'A senha é muito pequena.';
-    } if (errorCode === 'auth/invalid-email') {
+    } else if (errorCode === 'auth/invalid-email') {
       document.getElementById('error').innerText = 'E-mail inválido.';
     } else {
       document.getElementById('error').innerText = errorMessage;
@@ -31,40 +33,32 @@ function createUser() {
 }
 
 function Register() {
-  window.location.hash = '#register';
-  
-  const template = `
-    <p id="error"></p>
+  return `
     <section class ='initial-section'>
       <header class='initial-header'></header>
       <img class='img-section' src='img/logo.png'/>
       <div class="text">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
     
       <form>
-        ${Input({
-          id: 'email',
-          class: 'primary-input',
-          type: 'email',
-          placeholder: 'E-mail',
-        })}
-
-        ${Input({
-          id: 'password',
-          class: 'primary-input',
-          type: 'password',
-          placeholder: 'Senha',
-        })}
-
-        ${Button({
-          class: 'primary-button',
-          title: 'Registre-se',
-          onClick: createUser,
-        })}
-      </form>
-    </section>
-  `;
-
-  return template;
+      ${Input({
+    id: 'email',
+    class: 'primary-input',
+    type: 'email',
+    placeholder: 'E-mail',
+  })}
+      ${Input({
+    id: 'password',
+    class: 'primary-input',
+    type: 'password',
+    placeholder: 'Senha',
+  })}
+      ${Button({
+    class: 'primary-button',
+    title: 'Registre-se',
+    onClick: createUser,
+  })}
+  <p class='login-error' id="error"></p>
+      </form>`;
 }
 
 export default Register;

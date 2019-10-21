@@ -10,9 +10,12 @@ function userLogin() {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .catch((error) => {
         const errorCode = error.code;
+        console.log(errorCode);
         const errorMessage = error.message;
         if (errorCode === 'auth/user-not-found') {
           document.getElementById('error').innerText = 'Usuário não cadastrado.';
+        } else if (errorCode === 'auth/wrong-password') {
+          document.getElementById('error').innerText = 'Senha incorreta';
         }
       });
   }).catch(() => {
@@ -31,11 +34,16 @@ function googleLogin() {
       }
     }).catch((error) => {
       const errorCode = error.code;
+      console.log(errorCode);
       const errorMessage = error.message;
       const email = error.email;
+      console.log(email);
+
       const credential = error.credential;
       if (errorCode === 'auth/user-not-found') {
-        document.getElementById('error').innerText = `${error.message} - erro no login do google`;
+        document.getElementById('error').innerText = `${errorMessage} - erro no login do google`;
+      } else if (errorCode === 'auth/wrong-password') {
+        document.getElementById('error').innerText = `${errorMessage} - senha incorreta`;
       }
     });
   }).catch(() => {
@@ -53,15 +61,32 @@ function Login() {
   const login = `
     <section class ='initial-section'>
       <img class='img-section' src='img/logo.png'/>
-      <div class="text">Bem vindo à maior rede social de educação do Brasil!</div>
+      <div class="intro-text secondary-font">Bem vindo à maior rede social de educação do Brasil!</div>
       
       <form>
         ${Input({
-          id: 'email',
-          class: 'primary-input',
-          type: 'email',
-          placeholder: 'E-mail',
-        })}
+    id: 'email',
+    class: 'primary-input secondary-font',
+    type: 'email',
+    placeholder: 'E-mail',
+  })}
+      ${Input({
+    id: 'password',
+    class: 'primary-input secondary-font',
+    type: 'password',
+    placeholder: 'Senha',
+  })}
+      ${Button({
+    class: 'primary-button primary-font',
+    title: 'Entrar',
+    onClick: userLogin,
+  })}
+      ${Button({
+    class: 'google-login primary-login',
+    title: '<img src="../img/google.png">',
+    onClick: googleLogin,
+  })}
+        </form>
 
         ${Input({
           id: 'password',
