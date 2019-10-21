@@ -145,6 +145,7 @@
   color: black;
   display: block;
   padding: .9em;
+  border-radius: .4em;
 }
 
 @media (max-width: 1000px) {

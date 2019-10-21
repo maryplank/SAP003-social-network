@@ -39,17 +39,19 @@ function editPost(event) {
   const id = event.target.dataset.id;
   const postText = document.getElementById(id);
   postText.setAttribute('contentEditable', 'true');
-  postText.style.backgroundColor = 'red';
+  postText.focus();
+  postText.style.border = '1px solid #e37b40';
 }
 
 function saveEditPost(event) {
   const id = event.target.dataset.id;
-  const saveText = document.getElementById(id)
+  const saveText = document.getElementById(id);
   const newText = saveText.textContent;
   firebase.firestore().collection('post').doc(id).update({
     text: newText,
   });
   saveText.setAttribute('contentEditable', 'false');
+  saveText.style.border = 'none';
 }
 
 window.post = {
