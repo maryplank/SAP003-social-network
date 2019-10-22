@@ -66,34 +66,39 @@ function Login() {
       <div class="intro-text secondary-font">Bem vindo à maior rede social de educação do Brasil!</div>
       
       <form>
-        ${Input({
+    ${Input({
     id: 'email',
     class: 'primary-input secondary-font',
     type: 'email',
     placeholder: 'E-mail',
   })}
+
       ${Input({
     id: 'password',
     class: 'primary-input secondary-font',
     type: 'password',
     placeholder: 'Senha',
   })}
+
       ${Button({
+    id: 'login',
     class: 'primary-button primary-font',
     title: 'Entrar',
     onClick: userLogin,
   })}
+  
       ${Button({
+    id: 'googleLogin',
     class: 'google-login primary-login',
-    title: '<img src="../img/google.png">',
+    title: '',
     onClick: googleLogin,
   })}
         </form>
 
         <p class='login-error' id="error"></p>
-
+        <p class="intro-text secondary-font">Ainda não tem uma conta?</p>
       ${Link({
-    class: 'register-link',
+    class: 'primary-link primary-font',
     hash: '#register',
     text: 'Registre-se',
   })}

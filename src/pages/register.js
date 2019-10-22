@@ -1,5 +1,6 @@
 import Button from '../components/button.js';
 import Input from '../components/input.js';
+import Link from '../components/link.js';
 
 function createUser() {
   const email = document.querySelector('#email').value;
@@ -53,9 +54,15 @@ function Register() {
     placeholder: 'Senha',
   })}
       ${Button({
-    class: 'primary-button',
+    id: 'register',
+    class: 'primary-button primary-font',
     title: 'Registre-se',
     onClick: createUser,
+  })}
+  ${Link({
+    class: 'primary-link primary-font',
+    hash: '#login',
+    text: 'Voltar',
   })}
   <p class='login-error' id="error"></p>
       </form>`;
