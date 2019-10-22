@@ -6,6 +6,15 @@ function Post(props) {
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
+  
+  ${Button({
+    id: `likes${props.dataId}`,
+    dataId: props.dataId,
+    class: 'secondary-button primary-font',
+    onClick: window.post.newLike,
+    title: `Likes: ${props.likesCount}`,
+  })}
+
   ${Button({
     id: `delete${props.dataId}`,
     dataId: props.dataId,
@@ -79,13 +88,26 @@ function discardEditPost(event) {
   const cancelBtn = document.querySelector(`#cancel${id}`);
   const saveBtn = document.querySelector(`#save${id}`);
 
-  const postCollection = firebase.firestore().collection('post').doc(id);
-  postCollection.get().then((snap) => {
-    textBox.innerText = snap.data().text;
-    textBox.style.border = 'none';
-    saveBtn.style.display = 'none';
-    cancelBtn.style.display = 'none';
-  });
+  firebase.firestore().collection('post').doc(id).get()
+    .then((snap) => {
+      textBox.innerText = snap.data().text;
+      textBox.style.border = 'none';
+      saveBtn.style.display = 'none';
+      cancelBtn.style.display = 'none';
+    });
+}
+
+function newLike(event) {
+  const id = event.target.dataset.id;
+  const likesBtn = document.querySelector(`#likes${id}`);
+  firebase.firestore().collection('post').doc(id).get()
+    .then((snap) => {
+      const likesCount = snap.data().likes + 1;
+      firebase.firestore().collection('post').doc(id).update({
+        likes: likesCount,
+      });
+      likesBtn.innerText = `Likes: ${likesCount}`;
+    });
 }
 
 window.post = {
@@ -93,6 +115,7 @@ window.post = {
   editPost,
   saveEditPost,
   discardEditPost,
+  newLike,
 };
 
 export default Post;
