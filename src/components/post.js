@@ -5,8 +5,9 @@ function Post(props) {
   return `<div class="post" data-id="${props.dataId}">
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
-  <span class="post-text secondary-font" id="${props.dataId}" >${props.text}</span>
+  <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
   ${Button({
+    id: `delete${props.dataId}`,
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.deletePost,
@@ -14,6 +15,7 @@ function Post(props) {
   })}
 
   ${Button({
+    id: `edit${props.dataId}`,
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.editPost,
@@ -21,7 +23,7 @@ function Post(props) {
   })}
 
   ${Button({
-    id: 'save',
+    id: `save${props.dataId}`,
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.saveEditPost,
@@ -29,7 +31,7 @@ function Post(props) {
   })}
 
   ${Button({
-    id: 'cancel',
+    id: `cancel${props.dataId}`,
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.discardEditPost,
@@ -47,8 +49,8 @@ function deletePost(event) {
 function editPost(event) {
   const id = event.target.dataset.id;
   const postText = document.getElementById(id);
-  const saveBtn = document.querySelector('#save');
-  const cancelBtn = document.querySelector('#cancel');
+  const cancelBtn = document.querySelector(`#cancel${id}`);
+  const saveBtn = document.querySelector(`#save${id}`);
   postText.setAttribute('contentEditable', 'true');
   postText.focus();
   postText.style.border = '1px solid #e37b40';
@@ -60,8 +62,8 @@ function saveEditPost(event) {
   const id = event.target.dataset.id;
   const saveText = document.getElementById(id);
   const newText = saveText.textContent;
-  const saveBtn = document.querySelector('#save');
-  const cancelBtn = document.querySelector('#cancel');
+  const cancelBtn = document.querySelector(`#cancel${id}`);
+  const saveBtn = document.querySelector(`#save${id}`);
   firebase.firestore().collection('post').doc(id).update({
     text: newText,
   });
@@ -74,8 +76,8 @@ function saveEditPost(event) {
 function discardEditPost(event) {
   const id = event.target.dataset.id;
   const textBox = document.getElementById(id)
-  const saveBtn = document.querySelector('#save');
-  const cancelBtn = document.querySelector('#cancel');
+  const cancelBtn = document.querySelector(`#cancel${id}`);
+  const saveBtn = document.querySelector(`#save${id}`);
 
   const postCollection = firebase.firestore().collection('post').doc(id);
   postCollection.get().then((snap) => {

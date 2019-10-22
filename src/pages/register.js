@@ -53,6 +53,7 @@ function Register() {
     placeholder: 'Senha',
   })}
       ${Button({
+    id: 'register',
     class: 'primary-button primary-font',
     title: 'Registre-se',
     onClick: createUser,
