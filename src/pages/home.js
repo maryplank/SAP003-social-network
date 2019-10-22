@@ -51,6 +51,7 @@ function Home() {
     onClick: window.home.createNewPost,
     title: 'Post!',
   })}
+   
   </form>
 
   ${Feed()}
