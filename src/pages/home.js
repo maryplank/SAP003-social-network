@@ -1,6 +1,6 @@
 import Button from '../components/button.js';
 import Textarea from '../components/textarea.js';
-import { loadFeed, Feed } from '../components/feed.js';
+import { loadUserFeed, Feed } from '../components/feed.js';
 import Post from '../components/post.js';
 
 function logOut() {
@@ -20,18 +20,17 @@ function createNewPost() {
     likes: 0,
     comments: [],
     user_name: user.displayName,
+    user_id: user.uid,
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   };
   firebase.firestore().collection('post').add(post).then(() => {
     feed.innerHTML = '';
     content.value = '';
-    window.home.loadFeed();
+    window.home.loadUserFeed();
   });
 }
 
 function Home() {
-  window.location.href = '#home';
-
   const template = `
   ${Button({
     class: 'primary-button primary-font',
@@ -62,7 +61,7 @@ function Home() {
 window.home = {
   logOut,
   Post,
-  loadFeed,
+  loadUserFeed,
   createNewPost,
 };
 

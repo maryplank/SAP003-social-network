@@ -11,12 +11,14 @@ function printPosts(post) {
     text: post.data().text,
     likesCount: post.data().likes,
   });
+
   feed.innerHTML += template;
 }
 
-function loadFeed() {
+function loadUserFeed() {
   const postCollection = firebase.firestore().collection('post');
-  postCollection.orderBy('timestamp', 'desc').get().then((snap) => {
+  const currentUserId = firebase.auth().currentUser.uid;
+  postCollection.orderBy('timestamp', 'desc').where('user_id', '==', currentUserId).get().then((snap) => {
     snap.forEach(post => window.feed.printPosts(post));
   });
   return '';
@@ -24,15 +26,15 @@ function loadFeed() {
 
 function Feed() {
   return `
-  <div id="feed" class ="feed">${window.feed.loadFeed()}</div>
+  <div id="feed" class ="feed">${window.feed.loadUserFeed()}</div>
   `;
 }
 
 window.feed = {
   printPosts,
-  loadFeed,
+  loadUserFeed,
   Post,
   Feed,
 };
 
-export { loadFeed, Feed };
+export { loadUserFeed, Feed };

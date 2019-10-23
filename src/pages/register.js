@@ -43,13 +43,13 @@ function Register() {
       <form>
       ${Input({
     id: 'email',
-    class: 'primary-input',
+    class: 'primary-input secondary-font',
     type: 'email',
     placeholder: 'E-mail',
   })}
       ${Input({
     id: 'password',
-    class: 'primary-input',
+    class: 'primary-input secondary-font',
     type: 'password',
     placeholder: 'Senha',
   })}
