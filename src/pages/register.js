@@ -38,7 +38,7 @@ function Register() {
     <section class ='initial-section'>
       <header class='initial-header'></header>
       <img class='img-section' src='img/logo.png'/>
-      <div class="text">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
+      <div class="intro-text secondary-font">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
     
       <form>
       ${Input({

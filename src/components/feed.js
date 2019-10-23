@@ -9,6 +9,7 @@ function printPosts(post) {
     username: post.data().user_name,
     date: Date({ timestamp: post.data().timestamp }),
     text: post.data().text,
+    likesCount: post.data().likes,
   });
   feed.innerHTML += template;
 }
