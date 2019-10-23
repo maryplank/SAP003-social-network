@@ -26,7 +26,7 @@ function Post(props) {
         ${Button({
           dataId: props.dataId,
           class: 'secondary-button primary-font',
-          onCick: lwindow.post.saveEditPost,
+          onCick: window.post.saveEditPost,
           title: 'Salvar',
         })}
         <ul>
