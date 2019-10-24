@@ -1,5 +1,6 @@
 import Button from '../components/button.js';
 import Input from '../components/input.js';
+import Link from '../components/link.js';
 
 function createUser() {
   const email = document.querySelector('#email').value;
@@ -37,7 +38,7 @@ function Register() {
     <section class ='initial-section'>
       <header class='initial-header'></header>
       <img class='img-section' src='img/logo.png'/>
-      <div class="text">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
+      <div class="intro-text secondary-font">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
     
       <form>
       ${Input({
@@ -53,9 +54,15 @@ function Register() {
     placeholder: 'Senha',
   })}
       ${Button({
-    class: 'primary-button',
+    id: 'register',
+    class: 'primary-button primary-font',
     title: 'Registre-se',
     onClick: createUser,
+  })}
+  ${Link({
+    class: 'primary-link primary-font',
+    hash: '#login',
+    text: 'Voltar',
   })}
   <p class='login-error' id="error"></p>
       </form>`;
