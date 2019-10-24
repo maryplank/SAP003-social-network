@@ -1,8 +1,11 @@
 import Button from './button.js';
+import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
-  
+
+  const commentsTemplate =  props.comments.map(comment => `<li>${comment.commentText}</li>`).join('');
+
     return `
       <div class="post" data-id="${props.dataId}">
       <span class="post-username primary-font">${props.username}</span>
@@ -43,8 +46,8 @@ function Post(props) {
               onClick: window.post.commentPost,
               title: 'Comentar',
             })}
-
           </li>
+          ${commentsTemplate}
         </ul>  
       </div>
     `;
@@ -78,7 +81,7 @@ function saveEditPost(event) {
 function commentPost(event){
   const id = event.target.dataset.id;
   const commentText = document.querySelector('#comment1').value;
-  event.target.insertAdjacentHTML('afterend', `<li>${text}</li>`)
+  event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
   console.log(commentText)
 }
