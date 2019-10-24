@@ -1,7 +1,11 @@
 import Button from './button.js';
+import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
+
+  const commentsTemplate =  props.comments.map(comment => `<li>${comment.commentText}</li>`).join('');
+ 
   return `<div class="post" data-id="${props.dataId}">
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
@@ -46,6 +50,23 @@ function Post(props) {
     onClick: window.post.discardEditPost,
     title: 'Cancelar',
   })}
+    <ul>
+      <li>
+        ${Input({
+          id: 'comment1',
+          class: 'post-textbox secondary-font',
+          placeholder: 'Insira seu comentário',
+          })}
+
+          ${Button({
+          dataId: props.dataId,
+          class: 'secondary-button primary-font',
+          onClick: window.post.commentPost,
+          title: 'Comentar',
+          })}
+      </li>
+        ${commentsTemplate}
+    </ul>  
   </div>`;
 }
 
@@ -110,10 +131,20 @@ function newLike(event) {
     });
 }
 
+function commentPost(event){
+  const id = event.target.dataset.id;
+  const commentText = document.querySelector('#comment1').value;
+  event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`)
+  firebase.firestore().collection(`post/${id}/comments`).add({commentText});
+  console.log(commentText)
+}
+
 window.post = {
+  Textarea,
   deletePost,
   editPost,
   saveEditPost,
+  commentPost,
   discardEditPost,
   newLike,
 };
