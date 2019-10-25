@@ -3,6 +3,7 @@ import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
+
   const commentsTemplate =  props.comments.map(comment =>
     `<li>
       ${comment.commentText}
@@ -14,12 +15,11 @@ function Post(props) {
         title: 'Deletar',
         })}
       </li>`).join('');
- 
   return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
-  
+  <li>
   ${Button({
     id: `likes${props.dataId}`,
     dataId: props.dataId,
@@ -115,7 +115,7 @@ function saveEditPost(event) {
 
 function discardEditPost(event) {
   const id = event.target.dataset.id;
-  const textBox = document.getElementById(id)
+  const textBox = document.getElementById(id);
   const cancelBtn = document.querySelector(`#cancel${id}`);
   const saveBtn = document.querySelector(`#save${id}`);
 
@@ -141,9 +141,10 @@ function newLike(event) {
     });
 }
 
-function commentPost(event){
+function commentPost(event) {
   const id = event.target.dataset.id;
   const commentText = document.querySelector(`#comment${id}`).value;
+
   event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
 }

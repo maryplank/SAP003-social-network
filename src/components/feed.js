@@ -3,13 +3,13 @@ import Date from './date.js';
 
 function printPosts(post, comments) {
   const feed = document.querySelector('#feed');
-  
+
   const template = window.feed.Post({
     dataId: post.id,
-    username: post.data().user_name,
+    username: post.data().displayName,
     date: Date({ timestamp: post.data().timestamp }),
     text: post.data().text,
-    comments: comments,
+    comments,
     likesCount: post.data().likes,
   });
   feed.innerHTML += template;
@@ -18,7 +18,8 @@ function printPosts(post, comments) {
 function loadFeed() {
   const postCollection = firebase.firestore().collection('post');
   postCollection.orderBy('timestamp', 'desc').get().then((snap) => {
-    snap.forEach(post => {  
+
+    snap.forEach((post) => {
       post.ref.collection('comments').get()
         .then((querySnapshot) => {
           const comments = [];
