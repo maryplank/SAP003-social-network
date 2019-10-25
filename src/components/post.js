@@ -144,7 +144,6 @@ function newLike(event) {
 function commentPost(event) {
   const id = event.target.dataset.id;
   const commentText = document.querySelector(`#comment${id}`).value;
-
   event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
 }
