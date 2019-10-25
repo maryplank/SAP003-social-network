@@ -8,7 +8,8 @@ function Post(props) {
     `<li>
       ${comment.commentText}
       ${Button({
-        dataId: props.dataId,
+        dataId: comment.id,
+        dataId2: props.dataId,
         class: 'secondary-button primary-font',
         onClick: window.post.deleteComment,
         title: 'Deletar',
@@ -150,12 +151,10 @@ function commentPost(event){
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
 }
 
-
 function deleteComment(event) {
-  const id = event.target.dataset.id;
-  // const id2 = event.target.dataset.snapshot.id;
-  const idcomment = FirebaseDatabase.getInstance().getReference().child("id")
-  firebase.firestore().collection(`post/${id}/comments`).doc(idcomment).delete();
+  const idC = event.target.dataset.id;
+  const idP = event.target.dataset.id2;
+  firebase.firestore().collection(`post/${idP}/comments`).doc(idC).delete();
   event.target.parentElement.remove();
 }  
 
