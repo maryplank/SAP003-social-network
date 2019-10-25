@@ -35,7 +35,7 @@ function Post(props) {
         <ol>
           <form>
             ${Input({
-              id: 'comment1',
+              id: `comment${props.dataId}`,
               class: 'comment-text secondary-font',
               placeholder: 'Insira seu comentário',
             })}
@@ -80,10 +80,9 @@ function saveEditPost(event) {
 
 function commentPost(event){
   const id = event.target.dataset.id;
-  const commentText = document.querySelector('#comment1').value;
+  const commentText = document.querySelector(`#comment${id}`).value;
   event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
-  console.log(commentText)
 }
 
 window.post = {
