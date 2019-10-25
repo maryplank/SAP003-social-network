@@ -12,7 +12,7 @@ function Post(props) {
     dataId2: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.deleteComment,
-    title: '<img src="../img/delete.png">',
+    title: '<img src="../img/delete.png" alt="deletar esse comentário">',
     })}
       </li>`).join('');
   return `<div class="post" data-id='${props.dataId}'>
@@ -25,7 +25,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.newLike,
-    title: `<img src="../img/clapping.png">${props.likesCount}`,
+    title: `<img src="../img/clapping.png" alt="aplaudir esse post">${props.likesCount}`,
   })}
 
   ${Button({
@@ -33,7 +33,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.deletePost,
-    title: '<img src="../img/delete.png">',
+    title: '<img src="../img/delete.png" alt="deletar esse post">',
   })}
 
   ${Button({
@@ -41,7 +41,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.editPost,
-    title: '<img src="../img/pencil.png">',
+    title: '<img src="../img/pencil.png" alt="editar esse post">',
   })}
 
   ${Button({
@@ -49,7 +49,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.saveEditPost,
-    title: '<img src="../img/save.png">',
+    title: '<img src="../img/save.png" alt="salvar as alterações feitas nesse post">',
   })}
 
   ${Button({
@@ -57,7 +57,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.discardEditPost,
-    title: '<img src="../img/cross.png">',
+    title: '<img src="../img/cross.png" alt="descartar as alterações feitas nesse post">',
   })}
   <ol>
     <form>
@@ -71,7 +71,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.commentPost,
-    title: '<img src="../img/comment.png">',
+    title: '<img src="../img/comment.png" alt="enviar comentário">',
   })}
    </form>
    ${commentsTemplate}
@@ -137,7 +137,7 @@ function newLike(event) {
       firebase.firestore().collection('post').doc(id).update({
         likes: likesCount,
       });
-      likesBtn.innerHTML = `<img src='../img/clapping.png'> ${likesCount}`;
+      likesBtn.innerHTML = `<img src='../img/clapping.png' alt='aplaudir esse post'> ${likesCount}`;
     });
 }
 
