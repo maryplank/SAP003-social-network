@@ -26,8 +26,8 @@ function loadFeed() {
             comments.push({...comment.data(), id: comment.id});
           })
           window.feed.printPosts(post, comments);
-        })
-     });
+        });
+    });
   });
   return '';
 }
