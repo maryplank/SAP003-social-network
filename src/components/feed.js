@@ -18,14 +18,13 @@ function printPosts(post, comments) {
 function loadFeed() {
   const postCollection = firebase.firestore().collection('post');
   postCollection.orderBy('timestamp', 'desc').get().then((snap) => {
-    snap.forEach((post) => {
-      // firebase.firestore().collection('post/012OOZ3lxcKDN5n6jlZQ/comments')
+    snap.forEach(post => {  
       post.ref.collection('comments').get()
         .then((querySnapshot) => {
           const comments = [];
           querySnapshot.forEach((comment) => {
-            comments.push(comment.data());
-          });
+            comments.push({...comment.data(), id: comment.id});
+          })
           window.feed.printPosts(post, comments);
         });
     });
