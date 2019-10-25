@@ -4,7 +4,7 @@ import Textarea from './textarea.js';
 
 function Post(props) {
 
-  const commentsTemplate =  props.comments.map(comment => `<li>${comment.commentText}</li>`).join('');
+  const commentsTemplate =  props.comments.map(comment => `<ul class="comments secondary-font">${comment.commentText}</ul>`).join('');
 
     return `
       <div class="post" data-id="${props.dataId}">
@@ -32,11 +32,11 @@ function Post(props) {
           onCick: window.post.saveEditPost,
           title: 'Salvar',
         })}
-        <ul>
-          <li>
+        <ol>
+          <form>
             ${Input({
               id: 'comment1',
-              class: 'post-textbox secondary-font',
+              class: 'comment-text secondary-font',
               placeholder: 'Insira seu comentário',
             })}
 
@@ -46,9 +46,9 @@ function Post(props) {
               onClick: window.post.commentPost,
               title: 'Comentar',
             })}
-          </li>
+          </form>
           ${commentsTemplate}
-        </ul>  
+        </ol>  
       </div>
     `;
 }
@@ -81,62 +81,10 @@ function saveEditPost(event) {
 function commentPost(event){
   const id = event.target.dataset.id;
   const commentText = document.querySelector('#comment1').value;
-  event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`)
+  event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
   console.log(commentText)
 }
-
-  
-  // ${Button
-  //   dataId: props.dataId,
-  //   class: 'secondary-button primary-font',
-  //   onClick: window.post.commentPost,
-  //   title: 'Comentar',
-  // })}
-
-// function commentPost(props){
-//   ` <div>
-//     ${window.post.Textarea({
-//       id: `comment${props.dataId}`,
-//       class: 'comment-textbox secondary-font',
-//       placeholder: 'O que você está pensando agora?',
-//     })}
-
-//    ${window.post.Button({
-//       dataId: props.dataId,
-//       class: 'secondary-button primary-font',
-//       onClick: window.post.deletePost,
-//       title: 'Deletar',
-//     })}
-
-//     ${window.post.Button({
-//       dataId: props.dataId,
-//       class: 'secondary-button primary-font',
-//       onClick: window.post.editPost,
-//       title: 'Editar',
-//     })}
-
-//     ${window.post.Button({
-//       dataId: props.dataId,
-//       class: 'secondary-button primary-font',
-//       onClick: window.post.saveEditPost,
-//       title: 'Salvar',
-//     })}
-//   </div>`;
-
-//   firebase.firestore().collection('post').add(comment).then(() => {
-//     feed.innerHTML = '';
-//     content.value = '';
-//     window.home.commentPost();
-//   })
-// }
-
-
-
-// function commentPost(event){
-//   const id = event.target.dataset.id;
-//   const commentText = document.getElementById(id); queryselector.value
-//   firebase.firestore().collection(`post/${id}/comments`).add({text})
 
 window.post = {
   Textarea,

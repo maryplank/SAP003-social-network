@@ -110,6 +110,7 @@
 
 .post-textbox {
   display: flex;
+  flex-direction: column;
   resize: none;
   width: 50%;
   height: 6rem;
@@ -117,6 +118,19 @@
   padding: .8em;
   margin: .6em auto;
   border: none;
+  box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
+}
+
+.comment-text {
+  display: flexbox;
+  flex-direction:column-reverse;
+  resize: none;
+  width:70%;
+  height: 1rem;
+  border-radius: .7em;
+  padding: 1em;
+  margin: .6em auto;
+  border: none; 
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
@@ -146,6 +160,11 @@
   display: block;
   padding: .9em;
   border-radius: .4em;
+}
+
+.comments{
+
+padding-inline-start:0rem;
 }
 
 @media (max-width: 1000px) {
