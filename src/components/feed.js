@@ -9,7 +9,8 @@ function printPosts(post, comments) {
     username: post.data().user_name,
     date: Date({ timestamp: post.data().timestamp }),
     text: post.data().text,
-    comments: comments
+    comments: comments,
+    likesCount: post.data().likes,
   });
   feed.innerHTML += template;
 }
@@ -17,17 +18,17 @@ function printPosts(post, comments) {
 function loadFeed() {
   const postCollection = firebase.firestore().collection('post');
   postCollection.orderBy('timestamp', 'desc').get().then((snap) => {
-    snap.forEach(post => {  
+    snap.forEach((post) => {
       // firebase.firestore().collection('post/012OOZ3lxcKDN5n6jlZQ/comments')
       post.ref.collection('comments').get()
         .then((querySnapshot) => {
           const comments = [];
           querySnapshot.forEach((comment) => {
             comments.push(comment.data());
-          })
+          });
           window.feed.printPosts(post, comments);
-        })
-     });
+        });
+    });
   });
   return '';
 }
