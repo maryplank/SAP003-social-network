@@ -3,7 +3,6 @@ import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
-
   const commentsTemplate =  props.comments.map(comment =>
     `<li>
       ${comment.commentText}
@@ -14,9 +13,6 @@ function Post(props) {
         onClick: window.post.deleteComment,
         title: 'Deletar',
         })}
-        
-
-    
       </li>`).join('');
  
   return `<div class="post" data-id='${props.dataId}'>
@@ -63,24 +59,25 @@ function Post(props) {
     onClick: window.post.discardEditPost,
     title: 'Cancelar',
   })}
-    <ul>
-      <li>
-        ${Input({
-          id: props.id,
-          class: 'post-textbox secondary-font',
-          placeholder: 'Insira seu comentário',
-          })}
+  <ol>
+    <form>
+      ${Input({
+        id: `comment${props.dataId}`,
+        class: 'comment-text secondary-font',
+        placeholder: 'Insira seu comentário',
+      })}
 
-          ${Button({
-          dataId: props.dataId,
-          class: 'secondary-button primary-font',
-          onClick: window.post.commentPost,
-          title: 'Comentar',
-          })}
-      </li>
-        ${commentsTemplate}
-    </ul>  
-  </div>`;
+      ${Button({
+        dataId: props.dataId,
+        class: 'secondary-button primary-font',
+        onClick: window.post.commentPost,
+        title: 'Comentar',
+      })}
+   </form>
+   ${commentsTemplate}
+  </ol>
+</div>
+`;
 }
 
 function deletePost(event) {
@@ -146,8 +143,8 @@ function newLike(event) {
 
 function commentPost(event){
   const id = event.target.dataset.id;
-  const commentText = document.querySelector('#comment1').value;
-  event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`)
+  const commentText = document.querySelector(`#comment${id}`).value;
+  event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
 }
 
@@ -157,7 +154,6 @@ function deleteComment(event) {
   firebase.firestore().collection(`post/${idP}/comments`).doc(idC).delete();
   event.target.parentElement.remove();
 }  
-
 
 
 window.post = {
