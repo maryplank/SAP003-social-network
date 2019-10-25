@@ -18,17 +18,16 @@
 
 .initial-section{
   background-image: url(img/background.png);
-  background-size: cover;
+  background-size:cover;
   margin: auto;
   padding: 2em;
 }
 
 .img-section{
-  width: 70%;
-  max-width: 300px;
-  display: flex;
-  flex-direction: left;
-  margin: 3% auto;
+  width: 50%;
+  display:flex;
+  flex-direction: column;
+  margin:10% auto;
 }
 
 .intro-text {
@@ -68,19 +67,22 @@
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
+.google-login img {
+  width: 1.8em;
+}
+
 .google-login {
-  background-image: url(./img/google.png);
-  background-repeat: no-repeat;
-  background-size: 1.93em;
-  background-position: center;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
-  width: 3em;
-  height: 3em;
+  width: 2.5em;
+  height: 2.5em;
+  align-items: center;
   border: none;
   background-color: #f2f2f2;
   border-radius: 1.5em;
-  display: flex;
-  margin: .8em auto;
+  display:flex;
+  flex-direction: column;
+  margin: 1% auto;
+  padding: 0.35em 0 0 0;
 }
 
 .primary-input {
@@ -92,25 +94,23 @@
   display:flex;
   flex-direction: column;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
-  margin: 1em auto;
+  margin:3% auto;
 }
 
-.primary-link {
-  color: #156258;
+.register-link {
+  color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1.15em;
-  text-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
+  align-content :left;
 }
 
-.primary-link:hover {
+.register-link:hover {
   color: #f46b34;
 }
 
 .post-textbox {
   display: flex;
+  flex-direction: column;
   resize: none;
   width: 50%;
   height: 6rem;
@@ -121,6 +121,22 @@
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
+.comment-text {
+  display: flexbox;
+  flex-direction:column-reverse;
+  resize: none;
+  width:70%;
+  height: 1rem;
+  border-radius: .7em;
+  padding: 1em;
+  margin: .6em auto;
+  border: none; 
+  box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
+}
+
+.username{
+  color: #00bda1;
+}
 .post {
   background-color: #f2f2f2;
   padding: .7em;
@@ -149,12 +165,15 @@
   border-radius: .4em;
 }
 
+.comments{
+padding-inline-start:0rem;
+}
+
 .hidden-button {
   display: none;
 }
 
 @media (max-width: 1000px) {
-
   .post-textbox {
     width: 90%;
   } 

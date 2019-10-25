@@ -3,9 +3,19 @@ import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
-  const commentsTemplate = props.comments.map(comment => `<li>${comment.commentText}</li>`).join('');
 
-  return `<div class="post" data-id="${props.dataId}">
+  const commentsTemplate =  props.comments.map(comment =>
+    `<li>
+      ${comment.commentText}
+      ${Button({
+        dataId: comment.id,
+        dataId2: props.dataId,
+        class: 'secondary-button primary-font',
+        onClick: window.post.deleteComment,
+        title: 'Deletar',
+        })}
+      </li>`).join('');
+  return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
@@ -49,24 +59,25 @@ function Post(props) {
     onClick: window.post.discardEditPost,
     title: 'Cancelar',
   })}
-    <ul>
-      <li>
-          ${Textarea({
-    id: `comment${props.dataId}`,
-    class: 'post-textbox secondary-font',
-    placeholder: 'Insira seu comentário',
-  })}
-          ${Button({
-    dataId: props.dataId,
-    class: 'secondary-button primary-font',
-    onClick: window.post.commentPost,
-    title: 'Comentar',
-  })}
-      </li>
-        ${commentsTemplate}
-    </ul> 
-    </li> 
-  </div>`;
+  <ol>
+    <form>
+      ${Input({
+        id: `comment${props.dataId}`,
+        class: 'comment-text secondary-font',
+        placeholder: 'Insira seu comentário',
+      })}
+
+      ${Button({
+        dataId: props.dataId,
+        class: 'secondary-button primary-font',
+        onClick: window.post.commentPost,
+        title: 'Comentar',
+      })}
+   </form>
+   ${commentsTemplate}
+  </ol>
+</div>
+`;
 }
 
 function deletePost(event) {
@@ -133,9 +144,17 @@ function newLike(event) {
 function commentPost(event) {
   const id = event.target.dataset.id;
   const commentText = document.querySelector(`#comment${id}`).value;
-  event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`);
-  firebase.firestore().collection(`post/${id}/comments`).add({ commentText });
+
+  event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
+  firebase.firestore().collection(`post/${id}/comments`).add({commentText});
 }
+
+function deleteComment(event) {
+  const idC = event.target.dataset.id;
+  const idP = event.target.dataset.id2;
+  firebase.firestore().collection(`post/${idP}/comments`).doc(idC).delete();
+  event.target.parentElement.remove();
+}  
 
 
 window.post = {
@@ -146,6 +165,7 @@ window.post = {
   commentPost,
   discardEditPost,
   newLike,
+  deleteComment
 };
 
 export default Post;
