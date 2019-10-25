@@ -4,9 +4,21 @@ import Textarea from './textarea.js';
 
 function Post(props) {
 
-  const commentsTemplate =  props.comments.map(comment => `<li>${comment.commentText}</li>`).join('');
+  const commentsTemplate =  props.comments.map(comment =>
+    `<li>
+      ${comment.commentText}
+      ${Button({
+        dataId: props.dataId,
+        class: 'secondary-button primary-font',
+        onClick: window.post.deleteComment,
+        title: 'Deletar',
+        })}
+        
+
+    
+      </li>`).join('');
  
-  return `<div class="post" data-id="${props.dataId}">
+  return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
@@ -53,7 +65,7 @@ function Post(props) {
     <ul>
       <li>
         ${Input({
-          id: 'comment1',
+          id: props.id,
           class: 'post-textbox secondary-font',
           placeholder: 'Insira seu comentário',
           })}
@@ -136,8 +148,18 @@ function commentPost(event){
   const commentText = document.querySelector('#comment1').value;
   event.target.insertAdjacentHTML('afterend', `<li>${commentText}</li>`)
   firebase.firestore().collection(`post/${id}/comments`).add({commentText});
-  console.log(commentText)
 }
+
+
+function deleteComment(event) {
+  const id = event.target.dataset.id;
+  // const id2 = event.target.dataset.snapshot.id;
+  const idcomment = FirebaseDatabase.getInstance().getReference().child("id")
+  firebase.firestore().collection(`post/${id}/comments`).doc(idcomment).delete();
+  event.target.parentElement.remove();
+}  
+
+
 
 window.post = {
   Textarea,
@@ -147,6 +169,7 @@ window.post = {
   commentPost,
   discardEditPost,
   newLike,
+  deleteComment
 };
 
 export default Post;
