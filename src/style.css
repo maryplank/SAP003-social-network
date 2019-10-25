@@ -57,14 +57,17 @@
 }
 
 .secondary-button {
-  background-color: #f2f2f2;
   padding: .4em .7em;
   margin: .4em 0;
   border-radius: 1em;
   border: none;
-  background-color: #FFD857;
+  background-color: #dadada;
   color: #324d5c;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
+}
+
+.secondary-button img {
+  width: 18px;
 }
 
 .google-login img {

@@ -4,16 +4,16 @@ import Textarea from './textarea.js';
 
 function Post(props) {
 
-  const commentsTemplate =  props.comments.map(comment =>
+  const commentsTemplate = props.comments.map(comment =>
     `<li>
-      ${comment.commentText}
-      ${Button({
-        dataId: comment.id,
-        dataId2: props.dataId,
-        class: 'secondary-button primary-font',
-        onClick: window.post.deleteComment,
-        title: 'Deletar',
-        })}
+  ${comment.commentText}
+  ${Button({
+    dataId: comment.id,
+    dataId2: props.dataId,
+    class: 'secondary-button primary-font',
+    onClick: window.post.deleteComment,
+    title: '<img src="../img/delete.png">',
+    })}
       </li>`).join('');
   return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
@@ -25,7 +25,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.newLike,
-    title: `Likes: ${props.likesCount}`,
+    title: `<img src="../img/clapping.png">${props.likesCount}`,
   })}
 
   ${Button({
@@ -33,7 +33,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.deletePost,
-    title: 'Deletar',
+    title: '<img src="../img/delete.png">',
   })}
 
   ${Button({
@@ -41,7 +41,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button primary-font',
     onClick: window.post.editPost,
-    title: 'Editar',
+    title: '<img src="../img/pencil.png">',
   })}
 
   ${Button({
@@ -49,7 +49,7 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.saveEditPost,
-    title: 'Salvar',
+    title: '<img src="../img/save.png">',
   })}
 
   ${Button({
@@ -57,22 +57,22 @@ function Post(props) {
     dataId: props.dataId,
     class: 'secondary-button hidden-button primary-font',
     onClick: window.post.discardEditPost,
-    title: 'Cancelar',
+    title: '<img src="../img/cross.png">',
   })}
   <ol>
     <form>
-      ${Input({
-        id: `comment${props.dataId}`,
-        class: 'comment-text secondary-font',
-        placeholder: 'Insira seu comentário',
-      })}
+  ${Input({
+    id: `comment${props.dataId}`,
+    class: 'comment-text secondary-font',
+    placeholder: 'Insira seu comentário',
+  })}
 
-      ${Button({
-        dataId: props.dataId,
-        class: 'secondary-button primary-font',
-        onClick: window.post.commentPost,
-        title: 'Comentar',
-      })}
+  ${Button({
+    dataId: props.dataId,
+    class: 'secondary-button primary-font',
+    onClick: window.post.commentPost,
+    title: '<img src="../img/comment.png">',
+  })}
    </form>
    ${commentsTemplate}
   </ol>
@@ -137,7 +137,7 @@ function newLike(event) {
       firebase.firestore().collection('post').doc(id).update({
         likes: likesCount,
       });
-      likesBtn.innerText = `Likes: ${likesCount}`;
+      likesBtn.innerHTML = `<img src='../img/clapping.png'> ${likesCount}`;
     });
 }
 
