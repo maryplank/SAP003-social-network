@@ -13,20 +13,26 @@ function logOut() {
 
 function createNewPost() {
   const content = document.querySelector('#postText');
-  const user = firebase.auth().currentUser;
+  const userAuth = firebase.auth().currentUser.uid;
   const feed = document.querySelector('#feed');
-  const post = {
-    text: content.value,
-    likes: 0,
-    comments: [],
-    user_name: user.displayName,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  };
-  firebase.firestore().collection('post').add(post).then(() => {
-    feed.innerHTML = '';
-    content.value = '';
-    window.home.loadFeed();
-  });
+  firebase.firestore().collection('user').where('userUid', '==', userAuth).get()
+    .then((user) => {
+      const post = {
+        text: content.value,
+        likes: 0,
+        displayName: user.docs[0].data().displayName,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+      firebase.firestore().collection('post').add(post).then(() => {
+        feed.innerHTML = '';
+        content.value = '';
+        window.home.loadFeed();
+      });
+    });
+}
+
+function profile() {
+  window.location.href = '#profile';
 }
 
 function Home() {
@@ -38,7 +44,11 @@ function Home() {
     onClick: window.home.logOut,
     title: 'Log out',
   })}
-  
+  ${Button({
+    class: 'primary-button primary-font',
+    onClick: window.home.profile,
+    title: 'Perfil',
+  })}
   <form>
   ${Textarea({
     id: 'postText',
@@ -62,6 +72,7 @@ function Home() {
 
 window.home = {
   logOut,
+  profile,
   Post,
   loadFeed,
   createNewPost,

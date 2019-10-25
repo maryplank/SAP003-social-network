@@ -10,8 +10,6 @@ function userLogin() {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .catch((error) => {
         const errorCode = error.code;
-        console.log(errorCode);
-        const errorMessage = error.message;
         if (errorCode === 'auth/user-not-found') {
           document.getElementById('error').innerText = 'Usuário não cadastrado.';
         } else if (errorCode === 'auth/wrong-password') {
@@ -20,7 +18,6 @@ function userLogin() {
       });
   })
     .catch(() => {
-      alert('deu erro');
     });
 }
 
@@ -35,11 +32,8 @@ function googleLogin() {
       }
     }).catch((error) => {
       const errorCode = error.code;
-      console.log(errorCode);
       const errorMessage = error.message;
       const email = error.email;
-      console.log(email);
-
       const credential = error.credential;
       if (errorCode === 'auth/user-not-found') {
         document.getElementById('error').innerText = `${errorMessage} - erro no login do google`;
