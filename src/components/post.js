@@ -3,23 +3,22 @@ import Input from './input.js';
 import Textarea from './textarea.js';
 
 function Post(props) {
+  const commentsTemplate = props.comments.map(comment =>
+  `<li>
+    ${comment.commentText}
+    ${Button({
+      dataId: comment.id,
+      dataId2: props.dataId,
+      class: 'secondary-button primary-font',
+      onClick: window.post.deleteComment,
+      title: 'Deletar',
+      })}
+    </li>`).join('');
 
-  const commentsTemplate =  props.comments.map(comment =>
-    `<li>
-      ${comment.commentText}
-      ${Button({
-        dataId: comment.id,
-        dataId2: props.dataId,
-        class: 'secondary-button primary-font',
-        onClick: window.post.deleteComment,
-        title: 'Deletar',
-        })}
-      </li>`).join('');
   return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
-  <li>
   ${Button({
     id: `likes${props.dataId}`,
     dataId: props.dataId,
@@ -59,23 +58,24 @@ function Post(props) {
     onClick: window.post.discardEditPost,
     title: 'Cancelar',
   })}
-  <ol>
     <form>
-      ${Input({
-        id: `comment${props.dataId}`,
-        class: 'comment-text secondary-font',
-        placeholder: 'Insira seu comentário',
-      })}
+  ${Input({
+    id: `comment${props.dataId}`,
+    class: 'comment-textbox secondary-font',
+    placeholder: 'Insira seu comentário',
+  })}
 
-      ${Button({
-        dataId: props.dataId,
-        class: 'secondary-button primary-font',
-        onClick: window.post.commentPost,
-        title: 'Comentar',
-      })}
+  ${Button({
+    dataId: props.dataId,
+    class: 'secondary-button primary-font',
+    onClick: window.post.commentPost,
+    title: 'Comentar',
+  })}
+
    </form>
+   <div class='comments-feed secondary-font'>
    ${commentsTemplate}
-  </ol>
+   </div>
 </div>
 `;
 }
