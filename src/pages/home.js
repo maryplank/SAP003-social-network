@@ -20,7 +20,7 @@ function createNewPost() {
       const post = {
         text: content.value,
         likes: 0,
-        displayName: user.docs[0].data().displayName,
+        displayName: user.doc[0].data().displayName,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       };
       firebase.firestore().collection('post').add(post).then(() => {

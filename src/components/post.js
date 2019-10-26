@@ -154,7 +154,7 @@ function deleteComment(event) {
   const idP = event.target.dataset.id2;
   firebase.firestore().collection(`post/${idP}/comments`).doc(idC).delete();
   event.target.parentElement.remove();
-}  
+}
 
 
 window.post = {
@@ -165,7 +165,7 @@ window.post = {
   commentPost,
   discardEditPost,
   newLike,
-  deleteComment
+  deleteComment,
 };
 
 export default Post;
