@@ -7,9 +7,10 @@ function Post(props) {
   `<li>
     ${comment.commentText}
     ${Button({
+      id: 'delete-comment',
       dataId: comment.id,
       dataId2: props.dataId,
-      class: 'secondary-button primary-font',
+      class: 'delete-comment secondary-button primary-font',
       onClick: window.post.deleteComment,
       title: 'Deletar',
       })}
