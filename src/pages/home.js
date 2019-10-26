@@ -13,22 +13,20 @@ function logOut() {
 
 function createNewPost() {
   const content = document.querySelector('#postText');
-  const userAuth = firebase.auth().currentUser.uid;
+  const user = firebase.auth().currentUser;
   const feed = document.querySelector('#feed');
-  firebase.firestore().collection('user').where('userUid', '==', userAuth).get()
-    .then((user) => {
-      const post = {
-        text: content.value,
-        likes: 0,
-        displayName: user.doc[0].data().displayName,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-      firebase.firestore().collection('post').add(post).then(() => {
-        feed.innerHTML = '';
-        content.value = '';
-        window.home.loadFeed();
-      });
-    });
+  const post = {
+    text: content.value,
+    likes: 0,
+    comments: [],
+    user_name: user.displayName,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+  firebase.firestore().collection('post').add(post).then(() => {
+    feed.innerHTML = '';
+    content.value = '';
+    window.home.loadFeed();
+  });
 }
 
 function profile() {
