@@ -12,8 +12,6 @@ function createUser() {
   const birthday = document.querySelector('#birthday').value;
   firebase.auth().createUserWithEmailAndPassword(email, password).then((profile) => {
     const user = profile.user;
-
-
     firebase.firestore().collection('user').add({
       displayName: name,
       lastname: lastName,
@@ -40,7 +38,7 @@ function createUser() {
     if (errorCode === 'auth/email-already-in-use') {
       document.getElementById('error').innerText = 'E-mail já cadastrado.';
     } else if (errorCode === 'auth/weak-password') {
-      document.getElementById('error').innerText = 'Digite uma senha de no mínimo 6 dígtos .';
+      document.getElementById('error').innerText = 'Digite uma senha de no mínimo 6 dígtos.';
     } else if (errorCode === 'auth/invalid-email') {
       document.getElementById('error').innerText = 'E-mail inválido.';
     } else if (email === '' || password === '') {
@@ -56,7 +54,7 @@ function Register() {
     <section class ='initial-section'>
       <header class='initial-header'></header>
       <img class='img-section' src='img/logo.png'/>
-      <div class="text">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
+      <div class="intro-text secondary-font">Registre-se para fazer parte da maior rede social de educação do Brasil!</div>
     
       <form>
   ${Input({
@@ -73,7 +71,7 @@ function Register() {
   })}
   ${Input({
     id: 'birthday',
-    class: 'primary-input secondary-font',
+    class: 'date-input secondary-font',
     type: 'date',
   })}
   ${Input({
@@ -84,28 +82,31 @@ function Register() {
   })}
   ${Input({
     id: 'email',
-    class: 'primary-input',
+    class: 'primary-input secondary-font',
     type: 'email',
     placeholder: 'E-mail',
   })}
   ${Input({
     id: 'password',
-    class: 'primary-input',
+    class: 'primary-input secondary-font',
     type: 'password',
     placeholder: 'Senha',
   })}
+
+  <p class='login-error primary-font' id="error"></p>
+
       ${Button({
     id: 'register',
     class: 'primary-button primary-font',
     title: 'Registre-se',
     onClick: createUser,
   })}
+
   ${Link({
     class: 'primary-link primary-font',
     hash: '#login',
     text: 'Voltar',
   })}
-  <p class='login-error' id="error"></p>
       </form>`;
 }
 

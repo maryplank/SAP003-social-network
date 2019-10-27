@@ -91,6 +91,7 @@ function Login() {
 
         <p class='login-error' id="error"></p>
         <p class="intro-text secondary-font">Ainda não tem uma conta?</p>
+        
       ${Link({
     class: 'primary-link primary-font',
     hash: '#register',
