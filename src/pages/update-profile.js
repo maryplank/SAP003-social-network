@@ -7,62 +7,26 @@ function backToProfile() {
 }
 
 function save() {
-  const user = firebase.auth().currentUser;
   const name = document.querySelector('#nome');
   const sobreNome = document.querySelector('#sobrenome');
   const areaTeaching = document.querySelector('#teaching-area');
-  // const file = document.querySelector('#photo').files[0];
-
-  admin.auth().updateUser(uid, {
-    displayName: name.value,
-    sobrenome: sobreNome.value,
-    areaTeach: areaTeaching,
-    // photoURL: file,
-  }).catch((error) => {
-    document.getElementById('error').innerText = error;
-  });
-
-
-  firebase.firestore().collection('user')
-    .where('userUid', '==', user.uid)
-    .onSnapshot((querySnapshot) => {
-      querySnapshot.docs.forEach((doc) => {
-        doc.update({
-          displayName: name,
-          sobrenome: sobreNome,
+  const userAuth = firebase.auth().currentUser;
+  firebase.firestore().collection('user').where('userUid', '==', userAuth.uid).get()
+    .then((usersnapshot) => {
+      usersnapshot.forEach((usersnap) => {
+        usersnap.ref.update({
+          name: name.value,
+          lastname: sobreNome.value,
+          areaTeach: areaTeaching.value,
         });
       });
-
-      // querySnapshot.forEach((doc) => {
-      // doc.update({
-      //   displayName: name,
-      //   sobrenome: sobreNome,
-      // });
-
-      //   console.log(`${doc.id} => ${doc.data()}`);
-      // });
-      // console.log('---------> aqui');
-      // console.log(querySnapshot);
     });
-
-  const storageRef = firebase.storage().ref();
-
-  const mountainImagesRef = storageRef.child('images/mountains.jpg');
-  mountainImagesRef.put(file).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    console.log(snapshot);
-  });
 }
 
 function UpdateProfile() {
   const template = `
     <h1>Editar Perfil</h1>
     <form>
-    ${Input({
-    id: 'photo',
-    class: 'primary-input secondary-font',
-    type: 'file',
-  })}
   ${Input({
     id: 'nome',
     class: 'primary-input secondary-font',

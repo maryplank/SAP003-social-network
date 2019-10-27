@@ -80,7 +80,7 @@ function Post(props) {
 function deletePost(event) {
   const id = event.target.dataset.id;
   firebase.firestore().collection('post').doc(id).delete();
-  event.target.parentElement.remove();
+  event.target.parentElement.parentElement.remove();
 }
 
 function editPost(event) {
