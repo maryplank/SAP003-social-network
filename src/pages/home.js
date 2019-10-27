@@ -13,20 +13,22 @@ function logOut() {
 
 function createNewPost() {
   const content = document.querySelector('#postText');
-  const user = firebase.auth().currentUser;
   const feed = document.querySelector('#feed');
-  const post = {
-    text: content.value,
-    likes: 0,
-    comments: [],
-    user_name: user.displayName,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  };
-  firebase.firestore().collection('post').add(post).then(() => {
-    feed.innerHTML = '';
-    content.value = '';
-    window.home.loadFeed();
-  });
+  const user = firebase.auth().currentUser.uid;
+  firebase.firestore().collection('user').where('userUid', '==', user).get()
+    .then((snap) => {
+      const post = {
+        text: content.value,
+        likes: 0,
+        user_name: snap.docs[0].data().displayName,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+      firebase.firestore().collection('post').add(post).then(() => {
+        feed.innerHTML = '';
+        content.value = '';
+        window.home.loadFeed();
+      });
+    });
 }
 
 function profile() {
