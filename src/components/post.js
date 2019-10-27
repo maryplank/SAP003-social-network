@@ -1,20 +1,7 @@
 import Button from './button.js';
 import Input from './input.js';
 import Textarea from './textarea.js';
-
-function Comment(props) {
-  return `<div class='comment-text'>
-  ${props.text}
-  ${Button({
-    id: 'delete-comment',
-    dataId: props.dataId,
-    dataId2: props.dataId2,
-    class: 'delete-comment delete secondary-button primary-font',
-    onClick: window.post.deleteComment,
-    title: '',
-  })}
-  </div>`;
-}
+import Comment from './comment.js';
 
 function Post(props) {
   const commentsTemplate = props.comments.map(comment => Comment({
@@ -83,7 +70,7 @@ function Post(props) {
   })}
 
    </form>
-   <div class='comments-feed secondary-font'>
+   <div id='comments-feed' class='comments-feed secondary-font'>
    ${commentsTemplate}
    </div>
 </div>
@@ -153,14 +140,18 @@ function newLike(event) {
 
 function commentPost(event) {
   const id = event.target.dataset.id;
-  const commentText = document.querySelector(`#comment${id}`).value;
+  let commentText = document.querySelector(`#comment${id}`).value;
+  const commentFeed = document.querySelector('#comments-feed');
   const newComment = window.post.Comment({
     text: commentText,
     dataId: id,
   });
 
-  event.target.insertAdjacentHTML('afterend', newComment)
-  firebase.firestore().collection(`post/${id}/comments`).add({ commentText });
+  commentFeed.insertAdjacentHTML('afterbegin', newComment);
+  firebase.firestore().collection(`post/${id}/comments`).add({ commentText })
+    .then(() => {
+      commentText = '';
+    });
 }
 
 function deleteComment(event) {
