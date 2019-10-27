@@ -2,64 +2,73 @@ import Button from './button.js';
 import Input from './input.js';
 import Textarea from './textarea.js';
 
+function Comment(props) {
+  return `<div class='comment-text'>
+  ${props.text}
+  ${Button({
+    id: 'delete-comment',
+    dataId: props.dataId,
+    dataId2: props.dataId,
+    class: 'delete-comment delete secondary-button primary-font',
+    onClick: window.post.deleteComment,
+    title: '',
+  })}
+  </div>`;
+}
+
 function Post(props) {
-  const commentsTemplate = props.comments.map(comment =>
-  `<li>
-    ${comment.commentText}
-    ${Button({
-      id: 'delete-comment',
-      dataId: comment.id,
-      dataId2: props.dataId,
-      class: 'delete-comment secondary-button primary-font',
-      onClick: window.post.deleteComment,
-      title: 'Deletar',
-      })}
-    </li>`).join('');
+  const commentsTemplate = props.comments.map(comment => Comment({
+    text: comment.commentText,
+    dataId: comment.id,
+    dataId2: props.dataId,
+  })).join('');
 
   return `<div class="post" data-id='${props.dataId}'>
   <span class="post-username primary-font">${props.username}</span>
   <span class="post-date secondary-font">${props.date}</span>
   <span class="post-text secondary-font" id="${props.dataId}">${props.text}</span>
+  <div class="buttons-container">
   ${Button({
     id: `likes${props.dataId}`,
     dataId: props.dataId,
-    class: 'secondary-button primary-font',
+    class: 'secondary-button like primary-font',
     onClick: window.post.newLike,
-    title: `Likes: ${props.likesCount}`,
+    title: props.likesCount,
   })}
 
   ${Button({
     id: `delete${props.dataId}`,
     dataId: props.dataId,
-    class: 'secondary-button primary-font',
+    class: 'secondary-button delete primary-font',
     onClick: window.post.deletePost,
-    title: 'Deletar',
+    title: '',
   })}
 
   ${Button({
     id: `edit${props.dataId}`,
     dataId: props.dataId,
-    class: 'secondary-button primary-font',
+    class: 'secondary-button edit primary-font',
     onClick: window.post.editPost,
-    title: 'Editar',
+    title: '',
   })}
 
   ${Button({
     id: `save${props.dataId}`,
     dataId: props.dataId,
-    class: 'secondary-button hidden-button primary-font',
+    class: 'secondary-button confirm hidden-button primary-font',
     onClick: window.post.saveEditPost,
-    title: 'Salvar',
+    title: '',
   })}
 
   ${Button({
     id: `cancel${props.dataId}`,
     dataId: props.dataId,
-    class: 'secondary-button hidden-button primary-font',
+    class: 'secondary-button cancel hidden-button primary-font',
     onClick: window.post.discardEditPost,
-    title: 'Cancelar',
+    title: '',
   })}
-    <form>
+  </div>
+    <form class="comment-container">
   ${Input({
     id: `comment${props.dataId}`,
     class: 'comment-textbox secondary-font',
@@ -68,9 +77,9 @@ function Post(props) {
 
   ${Button({
     dataId: props.dataId,
-    class: 'secondary-button primary-font',
+    class: 'secondary-button comment primary-font',
     onClick: window.post.commentPost,
-    title: 'Comentar',
+    title: '',
   })}
 
    </form>
@@ -138,16 +147,21 @@ function newLike(event) {
       firebase.firestore().collection('post').doc(id).update({
         likes: likesCount,
       });
-      likesBtn.innerText = `Likes: ${likesCount}`;
+      likesBtn.innerText = likesCount;
     });
 }
 
 function commentPost(event) {
   const id = event.target.dataset.id;
   const commentText = document.querySelector(`#comment${id}`).value;
+  const newComment = window.post.Comment({
+    text: commentText,
+    dataId: id,
+    dataId2: id,
+  });
 
-  event.target.insertAdjacentHTML('afterend', `<ul>${commentText}</ul>`)
-  firebase.firestore().collection(`post/${id}/comments`).add({commentText});
+  event.target.insertAdjacentHTML('afterend', newComment)
+  firebase.firestore().collection(`post/${id}/comments`).add({ commentText });
 }
 
 function deleteComment(event) {
@@ -167,6 +181,7 @@ window.post = {
   discardEditPost,
   newLike,
   deleteComment,
+  Comment,
 };
 
 export default Post;

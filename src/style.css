@@ -62,13 +62,60 @@
 }
 
 .secondary-button {
-  padding: .4em .7em;
-  margin: .4em 0;
-  border-radius: 1em;
+  border-radius: 3em;
+  margin: 0 .5em;
+  width: 2.5em;
+  height: 2.5em;
   border: none;
-  background-color: #FFD857;
-  color: #324d5c;
+  background-color: #ccc;
+  color: #000;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
+  background-repeat: no-repeat;
+  background-size: 1.25em;
+  background-position: center;
+}
+
+.buttons-container {
+  width: auto;
+  height: 2.5em;
+  display: flex;
+}
+
+.like {
+  background-image: url(./img/clapping.png);
+  background-position: left;
+  background-size: 1.5em;
+  padding-right: .8em;
+  width: 4.7em;
+  text-align: right;
+  padding-left: .5em;
+  background-origin: content-box;
+}
+
+.delete {
+  background-image: url(./img/trash.png);
+}
+
+.edit {
+  background-image: url(./img/pencil.png);
+}
+
+.confirm {
+  background-image: url(./img/confirm.png);
+}
+
+.cancel {
+  background-image: url(./img/cancel.png);
+  background-size: 1.2em;
+}
+
+.comment {
+  background-image: url(./img/comment.png);
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: unset;
 }
 
 .google-login {
@@ -169,21 +216,26 @@
   display: none;
 }
 
+.comment-text {
+  padding: 10px;
+}
+
 .comment-textbox {
-  flex-direction: column-reverse;
+  justify-content: left;
   resize: none;
-  width: 66%;
+  width: 90%;
   height: 1rem;
   border-radius: 1em;
   padding: .5em;
-  margin: .6em auto;
+  margin: .6em auto 0 0;
   border: none;
   box-shadow: 6px 6px 10px -8px rgba(0,0,0,0.56);
 }
 
 .delete-comment {
-  margin-left: auto;
-  order: 2;
+  width: 2em;
+  height: 2em;
+  background-size: 1.25em;
 }
 
 .comment-feed {
