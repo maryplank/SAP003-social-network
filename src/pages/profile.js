@@ -19,9 +19,9 @@ function printProfile() {
         const birthday = user.data().birthday;
         const areaTeaching = user.data().areaTeach;
         const profileTemplate = `
-      <h3>${nome} ${sobrenome}</h3>
-      <p>${areaTeaching}</p>
-      <p>${birthday}</p>
+      <h3 class='intro-text tertiary-font'>Nome: <br>${nome} ${sobrenome}</h3>
+      <p class='intro-text secondary-font'>Área de ensino: <br>${areaTeaching}</p>
+      <p class='intro-text secondary-font'>Data de nascimento: <br>${birthday}</p>
       `;
         userProfile.innerHTML = profileTemplate;
       });
