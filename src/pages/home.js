@@ -14,13 +14,13 @@ function logOut() {
 function createNewPost() {
   const content = document.querySelector('#postText');
   const feed = document.querySelector('#feed');
-  const user = firebase.auth().currentUser.uid;
-  firebase.firestore().collection('user').where('userUid', '==', user).get()
+  const user = firebase.auth().currentUser;
+  firebase.firestore().collection('user').where('userUid', '==', user.uid).get()
     .then((snap) => {
       const post = {
         text: content.value,
         likes: 0,
-        user_name: snap.docs[0].data().displayName,
+        user_name: user.displayName == null ? snap.docs[0].data().displayName : user.displayName,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       };
       firebase.firestore().collection('post').add(post).then(() => {
