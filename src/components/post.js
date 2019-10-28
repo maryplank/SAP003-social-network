@@ -70,7 +70,7 @@ function Post(props) {
   })}
 
    </form>
-   <div id='comments-feed' class='comments-feed secondary-font'>
+   <div id='comments-feed${props.dataId}' class='comments-feed secondary-font'>
    ${commentsTemplate}
    </div>
 </div>
@@ -141,7 +141,7 @@ function newLike(event) {
 function commentPost(event) {
   const id = event.target.dataset.id;
   let commentText = document.querySelector(`#comment${id}`).value;
-  const commentFeed = document.querySelector('#comments-feed');
+  const commentFeed = document.querySelector(`#comments-feed${id}`);
   const newComment = window.post.Comment({
     text: commentText,
     dataId: id,
