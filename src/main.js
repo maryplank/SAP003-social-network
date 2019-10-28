@@ -15,9 +15,7 @@ function onHashChange() {
           body.className = 'background';
           main.innerHTML = Register();
           break;
-        case '#home':
-          main.innerHTML = Home();
-          break;
+
         case '#profile':
           main.innerHTML = Profile();
           break;
@@ -25,7 +23,8 @@ function onHashChange() {
           main.innerHTML = UpdateProfile();
           break;
         default:
-          main.innerHTML = '404 page not found';
+          main.innerHTML = Home();
+          break;
       }
     } else {
       switch (window.location.hash) {
@@ -33,12 +32,9 @@ function onHashChange() {
           body.className = 'background';
           main.innerHTML = Register();
           break;
-        case '#login':
+        default:
           body.className = 'background';
           main.innerHTML = Login();
-          break;
-        default:
-          main.innerHTML = '404 page not found';
       }
     }
   });
