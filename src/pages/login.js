@@ -27,9 +27,14 @@ function googleLogin() {
     firebase.auth().signInWithPopup(provider).then((result) => {
       const token = result.credential.accessToken;
       const user = result.user;
-      if (user) {
-        window.location.href = '#home';
-      }
+      firebase.firestore().collection('user').where('userUid', '==', user.uid).get()
+        .then((usersnapshot) => {
+          if (usersnapshot.size) {
+            window.location.href = '#home';
+          } else {
+            window.location.href = '#register';
+          }
+        });
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -91,6 +96,7 @@ function Login() {
 
         <p class='login-error' id="error"></p>
         <p class="intro-text secondary-font">Ainda não tem uma conta?</p>
+        
       ${Link({
     class: 'primary-link primary-font',
     hash: '#register',

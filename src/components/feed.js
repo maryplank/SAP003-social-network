@@ -6,7 +6,7 @@ function printPosts(post, comments) {
 
   const template = window.feed.Post({
     dataId: post.id,
-    username: post.data().displayName,
+    username: post.data().user_name,
     date: Date({ timestamp: post.data().timestamp }),
     text: post.data().text,
     comments,
@@ -24,7 +24,7 @@ function loadFeed() {
         .then((querySnapshot) => {
           const comments = [];
           querySnapshot.forEach((comment) => {
-            comments.push({...comment.data(), id: comment.id});
+            comments.push({ ...comment.data(), id: comment.id });
           })
           window.feed.printPosts(post, comments);
         });

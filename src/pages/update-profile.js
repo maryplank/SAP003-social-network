@@ -7,62 +7,33 @@ function backToProfile() {
 }
 
 function save() {
-  const user = firebase.auth().currentUser;
-  const name = document.querySelector('#nome');
-  const sobreNome = document.querySelector('#sobrenome');
-  const areaTeaching = document.querySelector('#teaching-area');
-  // const file = document.querySelector('#photo').files[0];
+  const name = document.querySelector('#nome').value;
+  const sobreNome = document.querySelector('#sobrenome').value;
+  const areaTeaching = document.querySelector('#teaching-area').value;
+  const birthday = document.querySelector('#birthday').value;
+  const userAuth = firebase.auth().currentUser;
 
-  admin.auth().updateUser(uid, {
-    displayName: name.value,
-    sobrenome: sobreNome.value,
-    areaTeach: areaTeaching,
-    // photoURL: file,
-  }).catch((error) => {
-    document.getElementById('error').innerText = error;
-  });
-
-
-  firebase.firestore().collection('user')
-    .where('userUid', '==', user.uid)
-    .onSnapshot((querySnapshot) => {
-      querySnapshot.docs.forEach((doc) => {
-        doc.update({
-          displayName: name,
-          sobrenome: sobreNome,
+  if (name === '' || sobreNome === '' || areaTeaching === '' || birthday === '') {
+    document.getElementById('error').innerText = 'Preencha os campos em branco';
+  } else {
+    firebase.firestore().collection('user').where('userUid', '==', userAuth.uid).get()
+      .then((usersnapshot) => {
+        usersnapshot.forEach((usersnap) => {
+          usersnap.ref.update({
+            displayName: name,
+            lastname: sobreNome,
+            areaTeach: areaTeaching,
+            birthday,
+          });
         });
       });
-
-      // querySnapshot.forEach((doc) => {
-      // doc.update({
-      //   displayName: name,
-      //   sobrenome: sobreNome,
-      // });
-
-      //   console.log(`${doc.id} => ${doc.data()}`);
-      // });
-      // console.log('---------> aqui');
-      // console.log(querySnapshot);
-    });
-
-  const storageRef = firebase.storage().ref();
-
-  const mountainImagesRef = storageRef.child('images/mountains.jpg');
-  mountainImagesRef.put(file).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    console.log(snapshot);
-  });
+  }
 }
 
 function UpdateProfile() {
   const template = `
-    <h1>Editar Perfil</h1>
+    <h1 class="intro-text tertiary-font">Editar Perfil</h1>
     <form>
-    ${Input({
-    id: 'photo',
-    class: 'primary-input secondary-font',
-    type: 'file',
-  })}
   ${Input({
     id: 'nome',
     class: 'primary-input secondary-font',
@@ -74,6 +45,11 @@ function UpdateProfile() {
     class: 'primary-input secondary-font',
     type: 'text',
     placeholder: 'Sobrenome',
+  })}
+  ${Input({
+    id: 'birthday',
+    class: 'date-input secondary-font',
+    type: 'date',
   })}
   ${Input({
     id: 'teaching-area',
@@ -91,7 +67,7 @@ function UpdateProfile() {
     title: 'Voltar ao perfil',
     onClick: window.configuration.backToProfile,
   })}
-  <p class='login-error' id="error"></p>
+  <p class='login-error primary-font' id="error"></p>
     </form>
 `;
   return template;
