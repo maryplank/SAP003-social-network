@@ -36,12 +36,12 @@ Nesta aplicação usamos *HTML5*, *CCS3*, *JavaScript (ES6+)* e *Firebase*.
 
 
 
-![mobile](img/mobile.png)
+![mobile](img/mantoan-gif-mobile.gif)
 
 
 * **Tela Desktop**
 
-![desktop](img/desktop.jpg)
+![desktop](img/mantoan-gif-desktop.gif)
 
 * **Paleta de Cores**
 
