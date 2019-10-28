@@ -4,52 +4,78 @@ import Input from '../components/input.js';
 import Link from '../components/link.js';
 
 function createUser() {
-  const email = document.querySelector('#email').value;
-  const password = document.querySelector('#password').value;
   const name = document.querySelector('#name').value;
   const lastName = document.querySelector('#lastname').value;
   const areaTeaching = document.querySelector('#teaching-area').value;
   const birthday = document.querySelector('#birthday').value;
-  firebase.auth().createUserWithEmailAndPassword(email, password).then((profile) => {
-    const user = profile.user;
+
+  const auth = firebase.auth().currentUser;
+  if (auth) {
     firebase.firestore().collection('user').add({
       displayName: name,
       lastname: lastName,
       areaTeach: areaTeaching,
-      brithday: birthday,
-      userUid: user.uid,
-    }).catch((error) => {
-      document.getElementById('error').innerText = error;
-    });
-    // user.updateProfile({
-    //   displayName: name,
-    //   lastname: lastName,
-    //   areaTeach: areaTeaching,
-    // }).catch((error) => {
-    //   document.getElementById('error').innerText = error;
-    // });
+      birthday,
+      userUid: auth.uid,
+    }).then(() => {
+      window.location.href = '#home';
+    })
+      .catch((error) => {
+        document.getElementById('error').innerText = error;
+      });
+  } else {
+    const email = document.querySelector('#email').value;
+    const password = document.querySelector('#password').value;
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((profile) => {
+      const user = profile.user;
+      firebase.firestore().collection('user').add({
+        displayName: name,
+        lastname: lastName,
+        areaTeach: areaTeaching,
+        birthday,
+        userUid: user.uid,
+      }).catch((error) => {
+        document.getElementById('error').innerText = error;
+      });
+      user.sendEmailVerification().then(() => {
+      }).catch(() => {
+      });
 
-    user.sendEmailVerification().then(() => {
-    }).catch(() => {
+      window.location.href = '#home';
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/email-already-in-use') {
+        document.getElementById('error').innerText = 'E-mail já cadastrado.';
+      } else if (errorCode === 'auth/weak-password') {
+        document.getElementById('error').innerText = 'Digite uma senha de no mínimo 6 dígtos.';
+      } else if (errorCode === 'auth/invalid-email') {
+        document.getElementById('error').innerText = 'E-mail inválido.';
+      } else if (email === '' || password === '') {
+        errorMessage.textContent = 'Preencha os campos em branco';
+      } else {
+        document.getElementById('error').innerText = errorMessage;
+      }
     });
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    if (errorCode === 'auth/email-already-in-use') {
-      document.getElementById('error').innerText = 'E-mail já cadastrado.';
-    } else if (errorCode === 'auth/weak-password') {
-      document.getElementById('error').innerText = 'Digite uma senha de no mínimo 6 dígtos.';
-    } else if (errorCode === 'auth/invalid-email') {
-      document.getElementById('error').innerText = 'E-mail inválido.';
-    } else if (email === '' || password === '') {
-      errorMessage.textContent = 'Preencha os campos em branco';
-    } else {
-      document.getElementById('error').innerText = errorMessage;
-    }
-  });
+  }
 }
 
 function Register() {
+  const auth = firebase.auth().currentUser;
+  const templateInput = `
+    ${Input({
+    id: 'email',
+    class: 'primary-input secondary-font',
+    type: 'email',
+    placeholder: 'E-mail',
+  })}
+    ${Input({
+    id: 'password',
+    class: 'primary-input secondary-font',
+    type: 'password',
+    placeholder: 'Senha',
+  })}`;
+
   return `
     <section class ='initial-section'>
       <header class='initial-header'></header>
@@ -80,18 +106,7 @@ function Register() {
     type: 'text',
     placeholder: 'Área de ensino',
   })}
-  ${Input({
-    id: 'email',
-    class: 'primary-input secondary-font',
-    type: 'email',
-    placeholder: 'E-mail',
-  })}
-  ${Input({
-    id: 'password',
-    class: 'primary-input secondary-font',
-    type: 'password',
-    placeholder: 'Senha',
-  })}
+  ${!auth ? templateInput : ''}
 
   <p class='login-error primary-font' id="error"></p>
 

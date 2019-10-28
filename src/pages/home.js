@@ -22,6 +22,7 @@ function createNewPost() {
         likes: 0,
         user_name: user.displayName == null ? snap.docs[0].data().displayName : user.displayName,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        userUid: user.uid,
       };
       firebase.firestore().collection('post').add(post).then(() => {
         feed.innerHTML = '';
