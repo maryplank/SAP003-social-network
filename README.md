@@ -1,6 +1,12 @@
 # MANTOAN
 
-Mantoan é uma rede social para professores, pais e familiares de PCDs que desejam encontrar maneiras de incluir e educar crianças e jovens.
+A educação inclusiva é essencial na formação e construção do caráter do indivíduo ainda na infância. As limitações que levam a adoção de políticas de educação inclusiva são basicamente de duas naturezas distintas, as limitações de aspecto físico como a cegueira, a surdez, paralisia ou ausência de membros locomotores e as limitações de aspecto cognitivo que são patologias ou síndromes que comprometem a capacidade de aprendizado do indivíduo.
+
+Através da utilização de ferramentas e abordagens de ensino específicas é possível contornar essas limitações, possibilitando uma democratização do ensino e integração social das crianças com algum tipo de deficiência.
+
+Por isso criamos a Mantoan, uma rede social para professores, pais e familiares de PCDs que desejam trocar experiência, atividades e encontrar maneiras de incluir e educar crianças e jovens.
+
+O processo de inclusão está diretamente relacionado à qualificação dos professores e adaptação da infraestrutura da instituição de ensino aos equipamentos necessários para operacionalizar essa acessibilidade.
 
 O nome Mantoan é baseado em Maria Teresa Eglér Mantoan, pedagoda, mestre e doutora em educação pela UNICAMP. Defende a educação inclusiva e ao direito incondicional de todos os alunos à educação escolar de nível básico e superior de ensino. 
 
@@ -28,13 +34,20 @@ Nesta aplicação usamos *HTML5*, *CCS3*, *JavaScript (ES6+)* e *Firebase*.
 
 * **Tela Mobile**
 
+
+
+![mobile](img/mobile.png)
+
+
 * **Tela Desktop**
+
+![desktop](img/desktop.jpg)
 
 * **Paleta de Cores**
 
 Esta foi a paleta de cores escolhida para utilizar na nossa aplicação.
 
-![paleta](img/paleta.jpeg)
+![paleta](img/paleta2.jpeg)
 
 ## Histórias de Usuário
 
