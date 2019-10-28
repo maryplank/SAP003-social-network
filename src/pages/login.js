@@ -94,7 +94,7 @@ function Login() {
   })}
         </form>
 
-        <p class='login-error' id="error"></p>
+        <p class='login-error primary-font' id="error"></p>
         <p class="intro-text secondary-font">Ainda não tem uma conta?</p>
         
       ${Link({
