@@ -45,18 +45,22 @@ function createUser() {
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      if (errorCode === 'auth/email-already-in-use') {
-        document.getElementById('error').innerText = 'E-mail já cadastrado.';
-      } else if (errorCode === 'auth/weak-password') {
-        document.getElementById('error').innerText = 'Digite uma senha de no mínimo 6 dígtos.';
-      } else if (errorCode === 'auth/invalid-email') {
-        document.getElementById('error').innerText = 'E-mail inválido.';
-      } else if (email === '' || password === '') {
-        errorMessage.textContent = 'Preencha os campos em branco';
-      } else {
-        document.getElementById('error').innerText = errorMessage;
-      }
+      document.getElementById('error').innerText = geterrorMessage(errorCode, errorMessage)
     });
+  }
+}
+
+function geterrorMessage(errorCode, errorMessage) {
+  if (errorCode === 'auth/email-already-in-use') {
+    return 'E-mail já cadastrado.';
+  } else if (errorCode === 'auth/weak-password') {
+    return 'Digite uma senha de no mínimo 6 dígtos.';
+  } else if (errorCode === 'auth/invalid-email') {
+    return 'E-mail inválido.';
+  } else if (email === '' || password === '') {
+    return 'Preencha os campos em branco';
+  } else {
+    return errorMessage;
   }
 }
 
